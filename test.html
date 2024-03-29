@@ -40,6 +40,7 @@
     <script>
         let audioLoop;
         let audioNoLoop;
+        let previousLoop;
 
         function startLoop() {
             const loopSelect = document.getElementById("selectLoop");
@@ -47,27 +48,35 @@
             const selectedLoop = loopSelect.value;
             const selectedNoLoop = noLoopSelect.value;
 
-            if (selectedLoop) {
-                audioLoop = new Audio(selectedLoop);
-                audioLoop.loop = true;
-                audioLoop.play();
-            }
-
-            if (selectedNoLoop) {
-                audioNoLoop = new Audio(selectedNoLoop);
-                audioNoLoop.loop = false;
-                audioNoLoop.play();
-            }
-        }
-
-        function stopLoop() {
             if (audioLoop) {
                 audioLoop.pause();
                 audioLoop.currentTime = 0;
             }
+
             if (audioNoLoop) {
                 audioNoLoop.pause();
                 audioNoLoop.currentTime = 0;
+            }
+
+            if (selectedLoop) {
+                audioLoop = new Audio(selectedLoop);
+                audioLoop.loop = true;
+                audioLoop.play();
+                previousLoop = audioLoop;
+            }
+
+            if (selectedNoLoop) {
+                audioNoLoop = new Audio(selectedNoLoop);
+            }
+        }
+
+        function stopLoop() {
+            if (previousLoop) {
+                previousLoop.pause();
+                previousLoop.currentTime = 0;
+            }
+            if (audioNoLoop) {
+                audioNoLoop.play();
             }
         }
     </script>
