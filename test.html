@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>音声再生</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    select {
+        padding: 8px;
+        font-size: 16px;
+        margin: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 10px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <h1>音声再生</h1>
+    <select id="selectLoop">
+        <option value="">音声を選択してください</option>
+        <option value="audio1.mp3">音声1</option>
+        <option value="audio2.mp3">音声2</option>
+    </select>
+    <select id="selectNoLoop">
+        <option value="">音声を選択してください</option>
+        <option value="audio3.mp3">音声3</option>
+        <option value="audio4.mp3">音声4</option>
+    </select><br>
+    <button id="btnStart" onclick="startLoop()">ON</button>
+    <button id="btnStop" onclick="stopLoop()">STOP</button>
+
+    <script>
+        let audioLoop;
+        let audioNoLoop;
+
+        function startLoop() {
+            const loopSelect = document.getElementById("selectLoop");
+            const noLoopSelect = document.getElementById("selectNoLoop");
+            const selectedLoop = loopSelect.value;
+            const selectedNoLoop = noLoopSelect.value;
+
+            if (selectedLoop) {
+                audioLoop = new Audio(selectedLoop);
+                audioLoop.loop = true;
+                audioLoop.play();
+            }
+
+            if (selectedNoLoop) {
+                audioNoLoop = new Audio(selectedNoLoop);
+                audioNoLoop.loop = false;
+                audioNoLoop.play();
+            }
+        }
+
+        function stopLoop() {
+            if (audioLoop) {
+                audioLoop.pause();
+                audioLoop.currentTime = 0;
+            }
+            if (audioNoLoop) {
+                audioNoLoop.pause();
+                audioNoLoop.currentTime = 0;
+            }
+        }
+    </script>
+</body>
+</html>
